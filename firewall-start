@@ -1,0 +1,6 @@
+#!/bin/sh
+#for i in `curl https://www.cloudflare.com/ips-v4`; do iptables -I INPUT -p tcp -m multiport --dports 35122 -s $i -j ACCEPT; done
+# https://github.com/RMerl/asuswrt-merlin.ng/wiki/Iptables-tips
+# https://gist.github.com/Manouchehri/cdd4e56db6596e7c3c5a
+# for i in `curl https://www.cloudflare.com/ips-v4`; do iptables -I VSERVER --table nat --proto tcp --match tcp --source $i --dport 8443 --jump DNAT --to-destination 192.168.1.178; done
+for i in `curl https://www.cloudflare.com/ips-v4`; do iptables --insert VSERVER 3 --table nat --proto tcp --match tcp --source $i --dport 8443 --jump DNAT --to-destination 192.168.1.178 ; done
